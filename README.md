@@ -1,7 +1,7 @@
 # Zeline-agentic
 Zeline magnetic ai
 
-> Zeline v0.4.7 dari [Mftrferdinand/Zeline](https://github.com/Mftrferdinand/Zeline) (lisensi MIT) + perbaikan yang dipakai di server saya. Source code saja — config, API key, dan data (folder `.zeline`) TIDAK ikut di-push.
+> Zeline **v0.4.7.1** — basis [v0.4.7](https://github.com/Mftrferdinand/Zeline/releases/tag/v0.4.7) dari [Mftrferdinand/Zeline](https://github.com/Mftrferdinand/Zeline) (lisensi MIT) + perbaikan yang dipakai di server saya. Source code saja — config, API key, dan data (folder `.zeline`) TIDAK ikut di-push.
 
 ## Perbaikan di versi ini
 
