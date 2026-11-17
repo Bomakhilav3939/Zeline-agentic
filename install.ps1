@@ -5,8 +5,8 @@
 #   .\install.ps1
 #
 # Or from a local clone:
-#   git clone https://github.com/Mftrferdinand/Zeline.git
-#   cd Zeline
+#   git clone https://github.com/Bomakhilav3939/Zeline-agentic.git
+#   cd Zeline-agentic
 #   powershell -ExecutionPolicy Bypass -File .\install.ps1 -Source .
 #
 # Switches (useful for CI / unattended installs):
@@ -31,9 +31,9 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
-$Version     = '0.4.7'
-$ReleaseRef  = 'v0.4.7'
-$ReleaseBase = "https://github.com/Mftrferdinand/Zeline/releases/download/$ReleaseRef"
+$Version     = '0.4.7.1'
+$ReleaseRef  = 'v0.4.7.1'
+$ReleaseBase = "https://github.com/Bomakhilav3939/Zeline-agentic/releases/download/$ReleaseRef"
 $WheelName   = "zeline-$Version-py3-none-any.whl"
 
 # ---------------------------------------------------------------- utilities
@@ -314,7 +314,7 @@ try {
     Write-Host 'Then verify:'
     Write-Host '  zeline doctor'
     Write-Host ''
-    Write-Host 'Docs: https://github.com/Mftrferdinand/Zeline'
+    Write-Host 'Docs: https://github.com/Bomakhilav3939/Zeline-agentic'
 }
 finally {
     if ($tempDir -and (Test-Path $tempDir)) {

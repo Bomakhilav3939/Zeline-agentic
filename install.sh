@@ -16,9 +16,9 @@
 #   ZELINE_PYTHON, ZELINE_PLATFORM, ZELINE_INSTALL_ROOT, ZELINE_BIN_DIR
 set -euo pipefail
 
-VERSION="0.4.7"
-REF="v0.4.7"
-RELEASE_BASE="https://github.com/Mftrferdinand/Zeline/releases/download/${REF}"
+VERSION="0.4.7.1"
+REF="v0.4.7.1"
+RELEASE_BASE="https://github.com/Bomakhilav3939/Zeline-agentic/releases/download/${REF}"
 WHEEL_NAME="zeline-${VERSION}-py3-none-any.whl"
 PLATFORM="${ZELINE_PLATFORM:-}"
 PLATFORM_INFO=0
@@ -401,4 +401,4 @@ printf '  Tools        : zeline tools list\n'
 printf '  Integrations : zeline mcp list\n'
 printf '  Health       : zeline doctor\n'
 printf '  Release      : %s\n' "$REF"
-printf '  Docs         : https://github.com/Mftrferdinand/Zeline\n'
+printf '  Docs         : https://github.com/Bomakhilav3939/Zeline-agentic\n'
