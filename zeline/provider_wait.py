@@ -6,7 +6,7 @@ import time
 from zeline import config
 
 _CURRENT = ContextVar('zeline_provider_wait', default=None)
-DEFAULT_STALL_SECONDS = 90.0
+DEFAULT_STALL_SECONDS = 300.0
 
 
 class _Wait:

@@ -1,3 +1,26 @@
+# Zeline-agentic
+Zeline magnetic ai
+
+> Zeline v0.4.7 dari [Mftrferdinand/Zeline](https://github.com/Mftrferdinand/Zeline) (lisensi MIT) + perbaikan yang dipakai di server saya. Source code saja — config, API key, dan data (folder `.zeline`) TIDAK ikut di-push.
+
+## Perbaikan di versi ini
+
+1. **Capacity guard — task paused tidak menumpuk selamanya** (`zeline/task_context.py`): task yang `paused` lebih dari 24 jam (`PAUSED_TTL_S = 86400`) diabaikan dari hitungan kapasitas, supaya antrian tidak penuh oleh task lama.
+2. **"Lanjut zeline" langsung resume** (`zeline/task_context.py`): kata sapaan bot (`zeline|salwaa|bro|bang|kak|mas|gan|cuy|lin|bot`) dikenali sebagai perintah lanjut, bukan pencarian nama task; kandidat task diurutkan dari yang terbaru.
+3. **Batas stall provider 90 → 300 detik** (`zeline/provider_wait.py`): `DEFAULT_STALL_SECONDS = 300.0`, supaya provider lambat tidak langsung dianggap macet.
+
+Catatan: kalau Zeline jalan sebagai user non-root, pastikan `tools.workspace` di `~/.zeline/config.json` menunjuk ke folder yang bisa diakses user itu (mis. `/home/boxd`), bukan `/root` — kalau tidak, semua perintah shell gagal dengan `Permission denied: '/root'`.
+
+## Install
+
+```bash
+pip install .
+```
+
+Lalu jalankan seperti Zeline biasa (`zeline gateway run`, `zeline chat`). Config dan provider diatur di `~/.zeline/config.json` (dibuat sendiri, jangan di-commit).
+
+---
+
 <p align="center">
   <img src="assets/zerolinear-logo.png" alt="Zerolinear" width="760">
 </p>

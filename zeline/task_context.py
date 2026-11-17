@@ -24,6 +24,7 @@ _PATH_LOCKS_GUARD = threading.Lock()
 class TaskContextStore:
     CONNECTION_TIMEOUT = 5
     MAX_TASKS = 128
+    PAUSED_TTL_S = 86400  # paused tasks older than this stop counting against MAX_TASKS
     MAX_ANCHORS = 2048
     MAX_OWNERS = 256
     MAX_EVENTS = 24
@@ -110,8 +111,28 @@ class TaskContextStore:
     def _unfinished_count(db, owner):
         # Stream existing records: terminal history stays addressable without
         # requiring a schema migration or SQLite's optional JSON1 extension.
-        return sum(json.loads(row[0])['status'] not in {'completed', 'cancelled'}
-                   for row in db.execute('SELECT record FROM task_context WHERE owner=?', (owner,)))
+        # A paused task only occupies a slot while it is fresh. Every new
+        # task auto-pauses the previous one, so without an age limit the
+        # 128 slots fill up with abandoned pauses and no new work can
+        # start. Paused tasks older than PAUSED_TTL_S stay resumable in
+        # history but stop counting against capacity.
+        now = time.time()
+        count = 0
+        for row in db.execute('SELECT record FROM task_context WHERE owner=?', (owner,)):
+            record = json.loads(row[0])
+            status = record.get('status')
+            if status in {'completed', 'cancelled'}:
+                continue
+            if status == 'paused':
+                updated = record.get('updated_at')
+                try:
+                    age = now - float(updated) if updated is not None else 0.0
+                except (TypeError, ValueError):
+                    age = 0.0
+                if age > TaskContextStore.PAUSED_TTL_S:
+                    continue
+            count += 1
+        return count
 
     def get(self, identity, task_id):
         with self._connection() as db:
@@ -152,7 +173,7 @@ class TaskContextStore:
         normalized = text.casefold().strip(' .!?\n\t')
         bare = bool(re.fullmatch(
             r'(?:lanjut(?:in|kan)?|gas(?:kan)?|terus(?:in|kan)?|continue|resume|proceed|next)'
-            r'(?:\s+(?:aja|dong|please|pls|tadi|lagi|terakhir|it|on))*', normalized))
+            r'(?:\s+(?:aja|dong|please|pls|tadi|lagi|terakhir|it|on|zeline|salwaa|bro|bang|kak|mas|gan|cuy|lin|bot))*', normalized))
         with self._connection() as db:
             row = db.execute('SELECT id FROM task_focus WHERE owner=?', (owner,)).fetchone()
             previous = self._get(db, owner, row[0]) if row else None
@@ -165,6 +186,7 @@ class TaskContextStore:
                 matches = [item for item in matches if terms and all(
                     term in (item['title'] + ' ' + item['request'] + ' ' + item['id']).casefold()
                     for term in terms)]
+                matches.sort(key=lambda item: float(item.get('updated_at') or 0), reverse=True)
                 if len(matches) != 1:
                     return {'task': None, 'reason': 'ambiguous' if matches else 'no_task',
                             'candidates': [{'id': item['id'], 'title': item['title']} for item in matches[:8]]}
