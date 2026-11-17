@@ -613,7 +613,7 @@ class Zeline:
         # default kecil (mis. 1024) sehingga reasoning saja sudah menghabiskan
         # seluruh kuota: stream selesai dengan content kosong dan
         # finish_reason=length ("provider tidak mengirim jawaban teks").
-        payload["max_tokens"] = 8192
+        payload["max_tokens"] = 32768
         if streaming:
             # Without this a streamed response reports no token usage at all.
             # Relays that don't understand it ignore the field; those that do

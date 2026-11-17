@@ -1,13 +1,14 @@
 # Zeline-agentic
 Zeline magnetic ai
 
-> Zeline **v0.4.7.1** — basis [v0.4.7](https://github.com/Mftrferdinand/Zeline/releases/tag/v0.4.7) dari [Mftrferdinand/Zeline](https://github.com/Mftrferdinand/Zeline) (lisensi MIT) + perbaikan yang dipakai di server saya. Source code saja — config, API key, dan data (folder `.zeline`) TIDAK ikut di-push.
+> Zeline **v0.4.7.2** — basis [v0.4.7](https://github.com/Mftrferdinand/Zeline/releases/tag/v0.4.7) dari [Mftrferdinand/Zeline](https://github.com/Mftrferdinand/Zeline) (lisensi MIT) + perbaikan yang dipakai di server saya. Source code saja — config, API key, dan data (folder `.zeline`) TIDAK ikut di-push.
 
 ## Perbaikan di versi ini
 
 1. **Capacity guard — task paused tidak menumpuk selamanya** (`zeline/task_context.py`): task yang `paused` lebih dari 24 jam (`PAUSED_TTL_S = 86400`) diabaikan dari hitungan kapasitas, supaya antrian tidak penuh oleh task lama.
 2. **"Lanjut zeline" langsung resume** (`zeline/task_context.py`): kata sapaan bot (`zeline|salwaa|bro|bang|kak|mas|gan|cuy|lin|bot`) dikenali sebagai perintah lanjut, bukan pencarian nama task; kandidat task diurutkan dari yang terbaru.
 3. **Batas stall provider 90 → 300 detik** (`zeline/provider_wait.py`): `DEFAULT_STALL_SECONDS = 300.0`, supaya provider lambat tidak langsung dianggap macet.
+4. **Batas output model 8192 → 32768 token** (`zeline/agent.py`): `payload["max_tokens"] = 32768`, supaya task panjang tidak ke-pause karena jawabannya kepotong di tengah (sebelumnya model mentok di 8192 token 3x berturut-turut).
 
 Catatan: kalau Zeline jalan sebagai user non-root, pastikan `tools.workspace` di `~/.zeline/config.json` menunjuk ke folder yang bisa diakses user itu (mis. `/home/boxd`), bukan `/root` — kalau tidak, semua perintah shell gagal dengan `Permission denied: '/root'`.
 
