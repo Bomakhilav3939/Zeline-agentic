@@ -16,8 +16,8 @@
 #   ZELINE_PYTHON, ZELINE_PLATFORM, ZELINE_INSTALL_ROOT, ZELINE_BIN_DIR
 set -euo pipefail
 
-VERSION="0.4.7.1"
-REF="v0.4.7.1"
+VERSION="0.4.7.2"
+REF="v0.4.7.2"
 RELEASE_BASE="https://github.com/Bomakhilav3939/Zeline-agentic/releases/download/${REF}"
 WHEEL_NAME="zeline-${VERSION}-py3-none-any.whl"
 PLATFORM="${ZELINE_PLATFORM:-}"

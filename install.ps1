@@ -31,8 +31,8 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
-$Version     = '0.4.7.1'
-$ReleaseRef  = 'v0.4.7.1'
+$Version     = '0.4.7.2'
+$ReleaseRef  = 'v0.4.7.2'
 $ReleaseBase = "https://github.com/Bomakhilav3939/Zeline-agentic/releases/download/$ReleaseRef"
 $WheelName   = "zeline-$Version-py3-none-any.whl"
 
